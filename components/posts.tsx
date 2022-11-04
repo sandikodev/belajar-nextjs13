@@ -1,0 +1,13 @@
+// components/Posts.js
+
+const Post = ({ post }: any) => {
+    return (
+        <div className="p-4 mb-4 text-sm text-blue-700 bg-blue-100 rounded-lg" >
+            <p className="font-medium" >
+                {post.id}. {post.title}
+            </p>
+            < p > {post.body} </p>
+        </div>
+    )
+}
+export default Post
