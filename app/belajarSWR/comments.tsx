@@ -4,7 +4,9 @@ import { Button } from '@material-tailwind/react'
 const AddComment = () => {
     // middleware access
     const address = `http://localhost:3000/api/comments`
-    const fetcher = (uri: RequestInfo | URL, payload: RequestInit | undefined) => fetch(uri, payload).then((res) => res.json())
+    const fetcher = (uri: RequestInfo | URL, payload: RequestInit | undefined) => fetch(
+        uri,
+        payload).then((res) => res.json())
 
     // init SWR
     const { data, error } = useSWR(address, fetcher)
@@ -19,8 +21,11 @@ const AddComment = () => {
         }
 
         // comunicate to middleware
-        await fetcher(address, {
+        const res = await fetcher(address, {
             method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
             body: JSON.stringify(newComment),
         })
 
@@ -35,9 +40,11 @@ const AddComment = () => {
         // const { data, error } = useSWR(address, fetcher, {
         //     revalidateOnFocus: false
         // })
+
+        alert(JSON.stringify(res))
     }
     return (
-        <Button onClick={addComment}>Write Posts</Button>
+        <Button onClick={() => addComment()}>Write Posts</Button>
     )
 }
 export default AddComment
