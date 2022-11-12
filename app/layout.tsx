@@ -2,6 +2,7 @@ import './globals.css'
 import Link from "next/link"
 import { Providers } from './providers'; // magic happen here!: migrate next12-next13 
 import NavbarMat from '../components/navbar'
+
 const Navbar = () => {
     return (
         <nav>
@@ -26,6 +27,7 @@ const Navbar = () => {
         </nav>
     )
 }
+
 export default function RootLayout({ children }: {
     children: React.ReactNode
 }) {

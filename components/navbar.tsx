@@ -1,5 +1,6 @@
 "use client"
 import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 import Link from "next/link";
 
 import {
@@ -13,47 +14,45 @@ import {
 const ListMenu: Array<{
     uri: string,
     title: string
-}> = [
-        {
-            uri: '/',
-            title: 'Home'
-        }, {
-            uri: '/belajarSWR',
-            title: 'Learn SWR'
-        }, {
-            uri: '/notes',
-            title: 'SSR Notes Pages'
-        }, {
-            uri: '/ssgPreRender',
-            title: 'SSG Pre Render Pages'
-        }, {
-            uri: '/ssgPreRender/blog',
-            title: 'Pre Render Blog'
-        }
-    ]
+}> = [{
+    uri: '/belajarSWR',
+    title: 'Learn SWR'
+}, {
+    uri: '/notes',
+    title: 'SSR Notes Pages'
+}, {
+    uri: '/ssgPreRender',
+    title: 'SSG Pre Render Pages'
+}, {
+    uri: '/ssgPreRender/blog',
+    title: 'Pre Render Blog'
+}]
 
 const NavList = () => {
     return (
         <ul className="mb-4 mt-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
-            <Typography
-                as="li"
-                variant="small"
-                color="blue-gray"
-                className="p-1 font-normal"
-            >
-                {
-                    ListMenu.map((data: any) => {
-                        <Link href={data.uri} className="flex items-center">
+            {
+                ListMenu.map((data: any, index) => (
+                    <Link key={index}
+                        href={data.uri}
+                        className="flex items-center no-underline">
+                        <Typography
+                            as="li"
+                            variant="small"
+                            color="blue-gray"
+                            className="p-1 font-normal"
+                        >
                             {data.title}
-                        </Link>
-                    })
-                }
-            </Typography>
+                        </Typography>
+                    </Link>
+                ))
+            }
         </ul>
     )
 }
 
-export default function Example() {
+export default function NavbarMat() {
+    const router = useRouter();
     const [openNav, setOpenNav] = useState(false);
 
     useEffect(() => {
@@ -63,6 +62,10 @@ export default function Example() {
         );
     }, []);
 
+    const handleLogin = (e: any, { href }: any) => {
+        e.preventDefault
+        router.push(href)
+    }
 
     return (
         <Navbar className="mt-2 mx-auto max-w-screen-xl py-2 px-4 lg:px-8 lg:py-4 shadow-lg">
@@ -71,15 +74,19 @@ export default function Example() {
                     as="a"
                     href="#"
                     variant="small"
-                    className="mr-4 cursor-pointer py-1.5 font-normal"
+                    className="mr-4 cursor-pointer py-1.5 font-normal no-underline"
                 >
-                    <span>Material Tailwind</span>
+                    Home
                 </Typography>
                 <div className="hidden lg:block">
                     <NavList />
                 </div>
-                <Button variant="gradient" size="sm" className="hidden lg:inline-block">
-                    <span>Buy Now</span>
+                <Button
+                    variant="gradient"
+                    size="sm"
+                    className="hidden lg:inline-block"
+                    onClick={() => router.push("/login")}>
+                    <span>Login</span>
                 </Button>
                 <IconButton
                     variant="text"
@@ -121,11 +128,17 @@ export default function Example() {
             </div>
             <MobileNav open={openNav}>
                 <NavList />
-                <Button variant="gradient" size="sm" fullWidth className="mb-2">
-                    <span>Buy Now</span>
-                </Button>
+                <a onClick={(e) => { handleLogin(e, '/login') }}>
+                    <Button
+                        variant="gradient"
+                        size="sm"
+                        fullWidth
+                        className="mb-2">
+                        <span>Login</span>
+                    </Button>
+                </a>
             </MobileNav>
-        </Navbar>
+        </Navbar >
     );
 }
 

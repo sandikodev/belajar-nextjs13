@@ -71,7 +71,7 @@ export default async function NotesPage() {
     return (
         <div>
             <h1>Experimental Server Side Rendering Next13</h1>
-            <CreateNote /> {/* ini component Client Side Rendering: harus direfresh pake router.refresh()*/}
+            <CreateNote /> ini component Client Side Rendering: harus direfresh pake router.refresh()
             <div className={styles.grid}>
                 {notes?.map((note) => {
                     return <Note key={note.id} note={note} />
@@ -81,18 +81,11 @@ export default async function NotesPage() {
     )
 }
 
-const Button = ({ onPress }: any) => {
-    return (
-        <button type='button' className='p-2 m-2 bg-red-400 rounded-full' onClick={onPress}>X</button>
-    )
-}
-// define component module here
 const Note = ({ note }: { note: any }) => {
     const { id, title, content, created } = note || {}
     return (
         <div className={styles.note}>
             <div className="flex items-right">
-                {/* <Button /> */}
             </div>
             <Link href={`/notes/${id}`}>
                 <h2 className='p-5 text-center font-bold'>{title}</h2>
